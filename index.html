@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>IT Management Cockpit</title>
+<style>
+:root{color-scheme:dark;--bg:#080c16;--panel:#111827;--panel2:#0d1422;--text:#eef2f7;--muted:#94a3b8;--line:#253044;--accent:#7dd3fc;--ok:#34d399;--warn:#fbbf24;--bad:#fb7185}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#172033 0,#080c16 42%);color:var(--text);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:1400px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}.eyebrow{color:var(--accent);font-weight:700;letter-spacing:.12em;font-size:12px}.title{font-size:clamp(26px,4vw,42px);font-weight:800;margin:2px 0}.sub,.updated{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:linear-gradient(145deg,rgba(17,24,39,.96),rgba(13,20,34,.96));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 40px #0003}.wide{grid-column:span 2}.card h2{font-size:14px;margin:0 0 12px;text-transform:uppercase;letter-spacing:.08em;color:#cbd5e1}.metric{font-size:38px;font-weight:800}.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #ffffff0b}.row:last-child{border:0}.pill{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:700}.ok{color:var(--ok);background:#34d39918}.warn{color:var(--warn);background:#fbbf2418}.bad{color:var(--bad);background:#fb718518}.muted{color:var(--muted)}.news{display:grid;gap:8px}.news a{color:var(--text);text-decoration:none}.news a:hover{text-decoration:underline}.news small{display:block;color:var(--muted);margin-top:2px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.btn{border:1px solid var(--line);background:#ffffff08;color:var(--text);border-radius:10px;padding:8px 11px;cursor:pointer}.footer{margin-top:16px;color:var(--muted);font-size:12px}.error{color:var(--warn)}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wide{grid-column:span 2}}@media(max-width:620px){.wrap{padding:12px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}.top{align-items:flex-start}.grid{grid-template-columns:1fr}.wide{grid-column:span 1}.card{border-radius:16px;padding:15px}.metric{font-size:34px}.updated{font-size:12px}.title{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div><div class="eyebrow">IT MANAGEMENT</div><div class="title">Situation Cockpit</div><div class="sub" id="date">–</div></div>
+    <div class="updated" id="updated">Lade Daten …</div>
+  </header>
+
+  <div class="grid">
+    <section class="card">
+      <h2>🌦 Frankfurt</h2>
+      <div class="metric" id="temp">–</div>
+      <div id="weatherText" class="muted">Wetter wird geladen …</div>
+      <div class="row"><span>Heute</span><span id="range">–</span></div>
+      <div class="row"><span>Niederschlag</span><span id="rain">–</span></div>
+      <div class="row"><span>Wind</span><span id="wind">–</span></div>
+    </section>
+
+    <section class="card">
+      <h2>☁️ Cloud / Internet</h2>
+      <div class="row"><span>Cloudflare</span><span id="cfStatus" class="pill">–</span></div>
+      <div id="cfIncident" class="muted" style="margin-top:10px">Status wird geladen …</div>
+    </section>
+
+    <section class="card">
+      <h2>🛡 Security</h2>
+      <div class="row"><span>CERT-Bund</span><span class="pill ok">RSS bereit</span></div>
+      <div class="row"><span>CISA KEV</span><span class="pill ok">Feed bereit</span></div>
+      <div class="muted" style="margin-top:10px">RSS-Feeds werden bewusst über den Server eingebunden.</div>
+    </section>
+
+    <section class="card wide">
+      <h2>📰 IT News</h2>
+      <div class="toolbar"><button class="btn" onclick="loadNews()">↻ Aktualisieren</button><span id="newsState" class="muted"></span></div>
+      <div id="news" class="news"><div class="muted">Für RSS wird ein kleiner Backend-Proxy benötigt.</div></div>
+    </section>
+
+    <section class="card">
+      <h2>🤖 AI Radar</h2>
+      <div class="row"><span>AI</span><span class="muted">Filter im Feed</span></div>
+      <div class="row"><span>Copilot</span><span class="muted">Filter im Feed</span></div>
+      <div class="row"><span>AI Act</span><span class="muted">Filter im Feed</span></div>
+      <div class="row"><span>LLM / Agents</span><span class="muted">Filter im Feed</span></div>
+    </section>
+
+    <section class="card wide">
+      <h2>🏦 Regulatory / Lage</h2>
+      <div id="regulatory" class="news">
+        <a href="https://www.bundesbank.de/de/startseite/rss" target="_blank" rel="noopener">Bundesbank RSS →</a>
+        <a href="https://www.bafin.de/DE/PublikationenDaten/Publikationen/Publikationen_node.html" target="_blank" rel="noopener">BaFin Publikationen →</a>
+        <a href="https://www.bsi.bund.de/" target="_blank" rel="noopener">BSI →</a>
+      </div>
+    </section>
+  </div>
+  <div class="footer">Datenquellen: Open-Meteo, Cloudflare Status sowie nachgelagerte RSS-/Open-Data-Quellen. Externe Daten sind Informationsquellen und keine interne Lagebewertung.</div>
+</div>
+
+<script>
+const weatherUrl="https://api.open-meteo.com/v1/forecast?latitude=50.1109&longitude=8.6821&current=temperature_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FBerlin";
+const cfUrl="https://www.cloudflarestatus.com/api/v2/summary.json";
+const codes={0:"Klar",1:"Überwiegend klar",2:"Teilweise bewölkt",3:"Bedeckt",45:"Nebel",48:"Reifnebel",51:"Nieselregen",53:"Nieselregen",55:"Nieselregen",61:"Regen",63:"Regen",65:"Starker Regen",71:"Schnee",73:"Schnee",75:"Starker Schnee",80:"Regenschauer",81:"Regenschauer",82:"Starke Regenschauer",95:"Gewitter",96:"Gewitter",99:"Gewitter"};
+
+function fmtDate(){document.getElementById("date").textContent=new Intl.DateTimeFormat("de-DE",{weekday:"long",day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date())}
+async function loadWeather(){
+ try{
+  const d=await fetch(weatherUrl).then(r=>r.json()), c=d.current, day=d.daily;
+  document.getElementById("temp").textContent=Math.round(c.temperature_2m)+" °C";
+  document.getElementById("weatherText").textContent=(codes[c.weather_code]||"Wetter")+" · Frankfurt am Main";
+  document.getElementById("range").textContent=Math.round(day.temperature_2m_min[0])+"° / "+Math.round(day.temperature_2m_max[0])+"°";
+  document.getElementById("rain").textContent=(day.precipitation_probability_max[0]??0)+" %";
+  document.getElementById("wind").textContent=Math.round(c.wind_speed_10m)+" km/h";
+ }catch(e){document.getElementById("weatherText").textContent="Wetter momentan nicht verfügbar";}
+}
+async function loadCloud(){
+ try{
+  const d=await fetch(cfUrl).then(r=>r.json());
+  const el=document.getElementById("cfStatus");
+  const good=d.status?.indicator==="none";
+  el.textContent=good?"Operational":(d.status?.description||"Störung");
+  el.className="pill "+(good?"ok":"warn");
+  const active=(d.incidents||[]).filter(x=>x.status!=="resolved");
+  document.getElementById("cfIncident").textContent=active.length?active[0].name:"Keine ungelösten Incidents";
+ }catch(e){document.getElementById("cfIncident").textContent="Cloudflare Status momentan nicht verfügbar";}
+}
+async function loadNews(){
+ document.getElementById("newsState").textContent="RSS wird über Backend erwartet";
+}
+function init(){fmtDate();loadWeather();loadCloud();document.getElementById("updated").textContent="Zuletzt geladen: "+new Intl.DateTimeFormat("de-DE",{hour:"2-digit",minute:"2-digit"}).format(new Date())}
+init();
+setInterval(()=>{loadWeather();loadCloud();document.getElementById("updated").textContent="Aktualisiert: "+new Intl.DateTimeFormat("de-DE",{hour:"2-digit",minute:"2-digit"}).format(new Date())},5*60*1000);
+</script>
+</body>
+</html>

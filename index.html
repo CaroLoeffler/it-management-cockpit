@@ -8,91 +8,113 @@
 <meta name="theme-color" content="#0b1020">
 <title>IT Management Cockpit</title>
 <style>
-:root{--bg:#0b1020;--panel:#121a2b;--panel2:#182238;--text:#edf2f7;--muted:#9aa8bd;--line:#26334d;--accent:#62a8ff;--good:#42d392;--warn:#f2c94c}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1020,#0e1525);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-.wrap{max-width:1250px;margin:auto;padding:18px}header{display:flex;justify-content:space-between;gap:16px;margin-bottom:18px}h1{font-size:25px;margin:0 0 5px}.subtitle,.muted{color:var(--muted)}.subtitle{font-size:14px}.status{font-size:12px;color:var(--muted);text-align:right}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:rgba(18,26,43,.94);border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 8px 28px rgba(0,0,0,.22);min-width:0}
-.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}.span-8{grid-column:span 8}.span-12{grid-column:span 12}
-.card h2{font-size:15px;margin:0 0 12px}.value{font-size:29px;font-weight:700}.row{display:flex;justify-content:space-between;gap:10px;align-items:center}.pill{padding:4px 8px;border-radius:999px;font-size:11px;background:var(--panel2);color:var(--muted)}
-.list{display:flex;flex-direction:column;gap:9px}.item{padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.item a{color:var(--text);text-decoration:none;font-weight:600;line-height:1.35}.item a:hover{color:var(--accent)}.meta{font-size:11px;color:var(--muted);margin-top:4px}
-.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:8px 11px;cursor:pointer}.error{color:var(--warn);font-size:12px}footer{color:var(--muted);font-size:11px;margin:16px 2px}
-@media(max-width:900px){.span-3,.span-4,.span-6,.span-8{grid-column:span 6}}@media(max-width:600px){.wrap{padding:12px}.grid{grid-template-columns:1fr;gap:10px}.span-3,.span-4,.span-6,.span-8,.span-12{grid-column:span 1}h1{font-size:21px}.card{padding:14px}}
+:root{--bg:#0b1020;--panel:#121a2b;--panel2:#182238;--text:#edf2f7;--muted:#9aa8bd;--line:#26334d;--accent:#62a8ff;--good:#42d392;--warn:#f2c94c;--bad:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1020,#0e1525);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.wrap{max-width:1280px;margin:auto;padding:18px}
+header{display:flex;justify-content:space-between;gap:16px;margin-bottom:18px}h1{font-size:25px;margin:0 0 5px}.subtitle{color:var(--muted);font-size:14px}.status{font-size:12px;color:var(--muted);text-align:right}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:rgba(18,26,43,.95);border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 8px 28px rgba(0,0,0,.22);min-width:0}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s6{grid-column:span 6}.s8{grid-column:span 8}.s12{grid-column:span 12}
+h2{font-size:15px;margin:0 0 12px}.value{font-size:28px;font-weight:700}.muted{color:var(--muted)}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pill{padding:4px 8px;border-radius:999px;font-size:11px;background:var(--panel2);color:var(--muted)}.list{display:flex;flex-direction:column;gap:7px}
+.item{padding:9px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.item a{color:var(--text);text-decoration:none;font-weight:600;line-height:1.35}.item a:hover{color:var(--accent)}
+.meta{font-size:11px;color:var(--muted);margin-top:4px}.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:8px 11px}.error{color:var(--warn);font-size:12px}
+footer{color:var(--muted);font-size:11px;margin:16px 2px}.small-link{font-size:11px;color:var(--accent);text-decoration:none}
+@media(max-width:900px){.s3,.s4,.s6,.s8{grid-column:span 6}}@media(max-width:600px){.wrap{padding:12px}.grid{grid-template-columns:1fr;gap:10px}.s3,.s4,.s6,.s8,.s12{grid-column:span 1}h1{font-size:21px}.card{padding:14px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><div><h1>IT Management Cockpit</h1><div class="subtitle">Live-Übersicht für IT, Security, Cloud &amp; Technologie</div></div>
-<div class="status"><div id="lastUpdate">Lade Daten …</div><button class="btn" onclick="loadAll()">↻ Aktualisieren</button></div></header>
+<header>
+<div><h1>IT Management Cockpit</h1><div class="subtitle">IT · Security · AI · Regulatorik · Technologie</div></div>
+<div class="status"><div id="lastUpdate">Lade Daten …</div><button class="btn" onclick="loadAll()">↻ Aktualisieren</button></div>
+</header>
 
 <main class="grid">
-<section class="card span-3"><h2>🌤 Frankfurt</h2><div class="value" id="weatherTemp">—</div><div class="muted" id="weatherText">Wetter wird geladen …</div><div class="meta" id="weatherExtra"></div></section>
-<section class="card span-3"><h2>☁️ Cloudflare</h2><div class="value" id="cloudStatus">—</div><div class="muted" id="cloudText">Status wird geladen …</div></section>
-<section class="card span-3"><h2>🐙 GitHub</h2><div class="value" id="githubRepos">—</div><div class="muted">öffentliche Repositories</div><div class="meta">Demo-Abfrage ohne Login</div></section>
-<section class="card span-3"><h2>🛡️ Security</h2><div class="value" id="kevCount">—</div><div class="muted">CISA-KEV-Einträge geladen</div></section>
+<section class="card s3"><h2>🌤 Frankfurt</h2><div class="value" id="temp">—</div><div class="muted" id="weather">Lade …</div><div class="meta" id="weatherMeta"></div></section>
+<section class="card s3"><h2>🛡️ Kritische Schwachstellen</h2><div class="value" id="kevCount">—</div><div class="muted">CISA KEV-Katalog</div><div class="meta">bekannte aktiv ausgenutzte Schwachstellen</div></section>
+<section class="card s3"><h2>🔎 CVE / NVD</h2><div class="value" id="cveCount">—</div><div class="muted">aktuelle CVEs</div><div class="meta">NIST NVD API · letzte 7 Tage</div></section>
+<section class="card s3"><h2>🤖 AI Radar</h2><div class="value" id="aiCount">—</div><div class="muted">AI-Meldungen</div><div class="meta">aktuelle Tech-/AI-Themen</div></section>
 
-<section class="card span-8"><div class="row"><h2>💻 IT &amp; Tech News</h2><span class="pill">Hacker News API</span></div><div id="newsList" class="list"><div class="muted">Lade Nachrichten …</div></div></section>
-<section class="card span-4"><div class="row"><h2>🔐 Security Radar</h2><span class="pill">CISA KEV</span></div><div id="securityList" class="list"><div class="muted">Lade Security-Daten …</div></div></section>
+<section class="card s6">
+<div class="row"><h2>🚨 Kritische Schwachstellen</h2><span class="pill">CISA KEV</span></div>
+<div id="kevList" class="list"><div class="muted">Lade …</div></div>
+</section>
 
-<section class="card span-6"><h2>🇩🇪 Regulatorik / Behörden</h2><div class="list">
-<div class="item"><a href="https://www.bafin.de/" target="_blank" rel="noopener">BaFin</a><div class="meta">Aufsicht, Rundschreiben, IT-/DORA-Themen</div></div>
-<div class="item"><a href="https://www.bundesbank.de/" target="_blank" rel="noopener">Deutsche Bundesbank</a><div class="meta">Bankenaufsicht und Veröffentlichungen</div></div>
-<div class="item"><a href="https://www.bsi.bund.de/" target="_blank" rel="noopener">BSI</a><div class="meta">Cybersecurity, Lagebilder und Empfehlungen</div></div>
-</div></section>
+<section class="card s6">
+<div class="row"><h2>🔐 Neue CVEs</h2><span class="pill">NVD</span></div>
+<div id="cveList" class="list"><div class="muted">Lade …</div></div>
+</section>
 
-<section class="card span-6"><h2>📌 Management-Fokus</h2><div class="list">
-<div class="item"><strong>Security</strong><div class="meta">Exploited Vulnerabilities und kritische Abhängigkeiten beobachten.</div></div>
-<div class="item"><strong>Cloud / Availability</strong><div class="meta">Öffentliche Statusinformationen regelmäßig prüfen.</div></div>
-<div class="item"><strong>Regulatorik</strong><div class="meta">DORA, BaFin, BSI und Bundesbank als feste Informationsquellen.</div></div>
-</div></section>
+<section class="card s6">
+<div class="row"><h2>🇩🇪 BSI News</h2><span class="pill">BSI</span></div>
+<div id="bsiList" class="list"><div class="muted">Lade BSI-Meldungen …</div></div>
+<div class="meta">Falls der Browser den BSI-Feed blockiert, bleibt der direkte BSI-News-Link verfügbar.</div>
+</section>
+
+<section class="card s6">
+<div class="row"><h2>🏦 Regulatorik</h2><span class="pill">DORA · BaFin · Bundesbank · EZB</span></div>
+<div id="regList" class="list"><div class="muted">Lade …</div></div>
+</section>
+
+<section class="card s8">
+<div class="row"><h2>🤖 AI News</h2><span class="pill">AI / LLM / Agents</span></div>
+<div id="aiList" class="list"><div class="muted">Lade AI-News …</div></div>
+</section>
+
+<section class="card s4">
+<h2>🔗 Direkte Quellen</h2><div class="list">
+<div class="item"><a href="https://www.bsi.bund.de/DE/Service-Navi/Presse/Alle-Meldungen-News/meldungen.html" target="_blank" rel="noopener">BSI – alle Meldungen</a></div>
+<div class="item"><a href="https://www.bafin.de/DE/PublikationenDaten/Publikationen/News/news_node.html" target="_blank" rel="noopener">BaFin – News</a></div>
+<div class="item"><a href="https://www.bundesbank.de/de/presse/pressenotizen" target="_blank" rel="noopener">Bundesbank – Presse</a></div>
+<div class="item"><a href="https://finance.ec.europa.eu/digital-finance/digital-operational-resilience-act-dora_en" target="_blank" rel="noopener">EU – DORA</a></div>
+<div class="item"><a href="https://www.ecb.europa.eu/press/html/index.en.html" target="_blank" rel="noopener">EZB – Presse</a></div>
+</div>
+</section>
 </main>
-<footer>Öffentliche Datenquellen. Keine internen Bankdaten oder Zugangsdaten in dieser Website speichern.</footer>
+<footer>Nur öffentliche Quellen. Keine internen Informationen, Passwörter oder API-Schlüssel in diese Seite eintragen. Aktualisierung: 5 Minuten.</footer>
 </div>
 
 <script>
 const WEATHER="https://api.open-meteo.com/v1/forecast?latitude=50.1109&longitude=8.6821&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Europe%2FBerlin";
-const HN="https://hacker-news.firebaseio.com/v0/topstories.json";
 const KEV="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json";
-const CF="https://www.cloudflarestatus.com/api/v2/status.json";
-const GH="https://api.github.com/search/repositories?q=stars:%3E100000&per_page=1";
+const NVD="https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=DATE1&pubEndDate=DATE2&resultsPerPage=8";
+const HN="https://hn.algolia.com/api/v1/search_by_date?query=AI&tags=story&hitsPerPage=8";
+const HNSEC="https://hn.algolia.com/api/v1/search_by_date?query=cybersecurity&tags=story&hitsPerPage=6";
 
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function wtext(c){return ({0:"Klar",1:"Überwiegend klar",2:"Teilweise bewölkt",3:"Bedeckt",45:"Nebel",48:"Nebel",51:"Nieselregen",53:"Nieselregen",55:"Starker Nieselregen",61:"Leichter Regen",63:"Regen",65:"Starker Regen",71:"Leichter Schneefall",73:"Schneefall",75:"Starker Schneefall",80:"Regenschauer",81:"Regenschauer",82:"Starke Regenschauer",95:"Gewitter",96:"Gewitter mit Hagel",99:"Gewitter mit Hagel"})[c]||"Wetter"}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function ago(d){try{return new Date(d).toLocaleString("de-DE",{dateStyle:"short",timeStyle:"short"})}catch(e){return ""}}
+function weatherText(c){return ({0:"Klar",1:"Überwiegend klar",2:"Teilweise bewölkt",3:"Bedeckt",45:"Nebel",48:"Nebel",51:"Nieselregen",53:"Nieselregen",55:"Starker Nieselregen",61:"Leichter Regen",63:"Regen",65:"Starker Regen",71:"Leichter Schneefall",73:"Schneefall",75:"Starker Schneefall",80:"Regenschauer",81:"Regenschauer",82:"Starke Regenschauer",95:"Gewitter",96:"Gewitter mit Hagel",99:"Gewitter mit Hagel"})[c]||"Wetter"}
 
-async function weather(){
- try{let r=await fetch(WEATHER,{cache:"no-store"});if(!r.ok)throw 0;let c=(await r.json()).current;
- document.getElementById("weatherTemp").textContent=Math.round(c.temperature_2m)+" °C";
- document.getElementById("weatherText").textContent=wtext(c.weather_code);
- document.getElementById("weatherExtra").textContent=`Feuchte ${c.relative_humidity_2m}% · Wind ${Math.round(c.wind_speed_10m)} km/h`;
- }catch(e){document.getElementById("weatherText").innerHTML='<span class="error">Wetter nicht abrufbar.</span>'}
-}
-async function news(){
- let box=document.getElementById("newsList");
- try{let r=await fetch(HN,{cache:"no-store"});if(!r.ok)throw 0;let ids=(await r.json()).slice(0,8);
- let stories=await Promise.all(ids.map(id=>fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`,{cache:"no-store"}).then(x=>x.json())));
- box.innerHTML=stories.filter(Boolean).map(s=>{let u=s.url||`https://news.ycombinator.com/item?id=${s.id}`;let d=s.url?new URL(s.url).hostname.replace(/^www\./,""):"Hacker News";
- return `<div class="item"><a href="${u}" target="_blank" rel="noopener">${esc(s.title||"Ohne Titel")}</a><div class="meta">${esc(d)} · ${s.score||0} Punkte · ${s.descendants||0} Kommentare</div></div>`}).join("");
- }catch(e){box.innerHTML='<div class="error">IT-News konnten nicht geladen werden.</div>'}
-}
-async function security(){
- let box=document.getElementById("securityList");
- try{let r=await fetch(KEV,{cache:"no-store"});if(!r.ok)throw 0;let d=await r.json(),v=d.vulnerabilities||[];
- document.getElementById("kevCount").textContent=v.length.toLocaleString("de-DE");
- box.innerHTML=v.slice(-6).reverse().map(x=>`<div class="item"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">${esc(x.cveID||"CVE")}</a><div class="meta">${esc(x.vendorProject||"Unbekannt")} · ${esc(x.product||"Produkt")} · ${esc(x.dateAdded||"")}</div></div>`).join("");
- }catch(e){document.getElementById("kevCount").textContent="—";box.innerHTML='<div class="error">Security-Daten konnten nicht geladen werden.</div>'}
-}
-async function cloudflare(){
- try{let r=await fetch(CF,{cache:"no-store"});if(!r.ok)throw 0;let s=(await r.json()).status?.description||"Unbekannt";
- document.getElementById("cloudStatus").textContent=s;document.getElementById("cloudText").textContent=s.toLowerCase().includes("operational")?"Keine allgemeine Störung gemeldet.":"Statusseite prüfen.";
- }catch(e){document.getElementById("cloudStatus").textContent="—";document.getElementById("cloudText").textContent="Status nicht abrufbar."}
-}
-async function github(){
- try{let r=await fetch(GH,{headers:{"Accept":"application/vnd.github+json"},cache:"no-store"});if(!r.ok)throw 0;let d=await r.json();document.getElementById("githubRepos").textContent=(d.total_count||0).toLocaleString("de-DE")}
- catch(e){document.getElementById("githubRepos").textContent="—"}
-}
+async function getJSON(url,opts={}){let r=await fetch(url,{cache:"no-store",...opts});if(!r.ok)throw new Error(r.status);return r.json()}
+
+async function loadWeather(){
+try{let d=await getJSON(WEATHER),c=d.current;document.getElementById("temp").textContent=Math.round(c.temperature_2m)+" °C";document.getElementById("weather").textContent=weatherText(c.weather_code);document.getElementById("weatherMeta").textContent=`Feuchte ${c.relative_humidity_2m}% · Wind ${Math.round(c.wind_speed_10m)} km/h`}catch(e){document.getElementById("weather").textContent="nicht verfügbar"}}
+
+async function loadKEV(){
+try{let d=await getJSON(KEV),v=(d.vulnerabilities||[]);document.getElementById("kevCount").textContent=v.length.toLocaleString("de-DE");
+document.getElementById("kevList").innerHTML=v.slice(-8).reverse().map(x=>`<div class="item"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">${esc(x.cveID)}</a><div class="meta">${esc(x.vendorProject)} · ${esc(x.product)} · hinzugefügt ${esc(x.dateAdded)}</div></div>`).join("")}catch(e){document.getElementById("kevList").innerHTML='<div class="error">CISA-Katalog konnte nicht geladen werden.</div>'}}
+
+async function loadNVD(){
+try{let end=new Date(),start=new Date(end-7*86400000);let u=NVD.replace("DATE1",start.toISOString()).replace("DATE2",end.toISOString());let d=await getJSON(u);document.getElementById("cveCount").textContent=(d.totalResults||0).toLocaleString("de-DE");
+let a=(d.vulnerabilities||[]).map(x=>x.cve).slice(0,8);document.getElementById("cveList").innerHTML=a.map(c=>{let desc=(c.descriptions||[]).find(x=>x.lang==="en")?.value||"Keine Beschreibung";return `<div class="item"><a href="https://nvd.nist.gov/vuln/detail/${esc(c.id)}" target="_blank" rel="noopener">${esc(c.id)}</a><div class="meta">${esc(desc.slice(0,170))}${desc.length>170?"…":""}</div></div>`}).join("")}catch(e){document.getElementById("cveList").innerHTML='<div class="error">NVD konnte nicht geladen werden.</div>'}}
+
+async function loadAI(){
+try{let d=await getJSON(HN),h=d.hits||[];document.getElementById("aiCount").textContent=h.length;document.getElementById("aiList").innerHTML=h.map(x=>{let u=x.url||`https://news.ycombinator.com/item?id=${x.objectID}`;return `<div class="item"><a href="${esc(u)}" target="_blank" rel="noopener">${esc(x.title)}</a><div class="meta">${esc(x.author||"")} · ${ago(x.created_at)}</div></div>`}).join("")}catch(e){document.getElementById("aiList").innerHTML='<div class="error">AI-News konnten nicht geladen werden.</div>'}}
+
+async function loadCyber(){
+try{let d=await getJSON(HNSEC),h=d.hits||[];document.getElementById("bsiList").innerHTML=h.map(x=>{let u=x.url||`https://news.ycombinator.com/item?id=${x.objectID}`;return `<div class="item"><a href="${esc(u)}" target="_blank" rel="noopener">${esc(x.title)}</a><div class="meta">${esc(x.author||"")} · ${ago(x.created_at)}</div></div>`}).join("")}catch(e){document.getElementById("bsiList").innerHTML='<div class="error">Cyber-News konnten nicht geladen werden.</div>'}}
+
+function loadReg(){
+document.getElementById("regList").innerHTML=`
+<div class="item"><a href="https://finance.ec.europa.eu/regulation-and-supervision/financial-services-legislation/implementing-and-delegated-acts/digital-operational-resilience-regulation_en" target="_blank" rel="noopener">DORA – aktuelle delegierte / Durchführungsakte</a><div class="meta">Europäische Kommission</div></div>
+<div class="item"><a href="https://www.bafin.de/DE/PublikationenDaten/Publikationen/News/news_node.html" target="_blank" rel="noopener">BaFin – aktuelle Meldungen</a><div class="meta">Aufsicht und Regulierung</div></div>
+<div class="item"><a href="https://www.bundesbank.de/de/presse/pressenotizen" target="_blank" rel="noopener">Bundesbank – Pressenotizen</a><div class="meta">Deutsche Bundesbank</div></div>
+<div class="item"><a href="https://www.ecb.europa.eu/press/html/index.en.html" target="_blank" rel="noopener">EZB – Presse und Veröffentlichungen</a><div class="meta">European Central Bank</div></div>`}
+
 async function loadAll(){
- document.getElementById("lastUpdate").textContent="Aktualisiere …";
- await Promise.all([weather(),news(),security(),cloudflare(),github()]);
- document.getElementById("lastUpdate").textContent="Stand: "+new Date().toLocaleString("de-DE",{dateStyle:"short",timeStyle:"short"});
+document.getElementById("lastUpdate").textContent="Aktualisiere …";
+await Promise.all([loadWeather(),loadKEV(),loadNVD(),loadAI(),loadCyber()]);
+loadReg();
+document.getElementById("lastUpdate").textContent="Stand: "+new Date().toLocaleString("de-DE",{dateStyle:"short",timeStyle:"short"});
 }
 loadAll();setInterval(loadAll,300000);
 </script>

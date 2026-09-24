@@ -3,106 +3,98 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1020">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b1020">
 <title>IT Management Cockpit</title>
 <style>
-:root{color-scheme:dark;--bg:#080c16;--panel:#111827;--panel2:#0d1422;--text:#eef2f7;--muted:#94a3b8;--line:#253044;--accent:#7dd3fc;--ok:#34d399;--warn:#fbbf24;--bad:#fb7185}
-*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#172033 0,#080c16 42%);color:var(--text);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.wrap{max-width:1400px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}.eyebrow{color:var(--accent);font-weight:700;letter-spacing:.12em;font-size:12px}.title{font-size:clamp(26px,4vw,42px);font-weight:800;margin:2px 0}.sub,.updated{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:linear-gradient(145deg,rgba(17,24,39,.96),rgba(13,20,34,.96));border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 40px #0003}.wide{grid-column:span 2}.card h2{font-size:14px;margin:0 0 12px;text-transform:uppercase;letter-spacing:.08em;color:#cbd5e1}.metric{font-size:38px;font-weight:800}.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #ffffff0b}.row:last-child{border:0}.pill{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:700}.ok{color:var(--ok);background:#34d39918}.warn{color:var(--warn);background:#fbbf2418}.bad{color:var(--bad);background:#fb718518}.muted{color:var(--muted)}.news{display:grid;gap:8px}.news a{color:var(--text);text-decoration:none}.news a:hover{text-decoration:underline}.news small{display:block;color:var(--muted);margin-top:2px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.btn{border:1px solid var(--line);background:#ffffff08;color:var(--text);border-radius:10px;padding:8px 11px;cursor:pointer}.footer{margin-top:16px;color:var(--muted);font-size:12px}.error{color:var(--warn)}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wide{grid-column:span 2}}@media(max-width:620px){.wrap{padding:12px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}.top{align-items:flex-start}.grid{grid-template-columns:1fr}.wide{grid-column:span 1}.card{border-radius:16px;padding:15px}.metric{font-size:34px}.updated{font-size:12px}.title{font-size:28px}}
+:root{--bg:#0b1020;--panel:#121a2b;--panel2:#182238;--text:#edf2f7;--muted:#9aa8bd;--line:#26334d;--accent:#62a8ff;--good:#42d392;--warn:#f2c94c}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0b1020,#0e1525);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1250px;margin:auto;padding:18px}header{display:flex;justify-content:space-between;gap:16px;margin-bottom:18px}h1{font-size:25px;margin:0 0 5px}.subtitle,.muted{color:var(--muted)}.subtitle{font-size:14px}.status{font-size:12px;color:var(--muted);text-align:right}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:rgba(18,26,43,.94);border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:0 8px 28px rgba(0,0,0,.22);min-width:0}
+.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}.span-8{grid-column:span 8}.span-12{grid-column:span 12}
+.card h2{font-size:15px;margin:0 0 12px}.value{font-size:29px;font-weight:700}.row{display:flex;justify-content:space-between;gap:10px;align-items:center}.pill{padding:4px 8px;border-radius:999px;font-size:11px;background:var(--panel2);color:var(--muted)}
+.list{display:flex;flex-direction:column;gap:9px}.item{padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.item a{color:var(--text);text-decoration:none;font-weight:600;line-height:1.35}.item a:hover{color:var(--accent)}.meta{font-size:11px;color:var(--muted);margin-top:4px}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:8px 11px;cursor:pointer}.error{color:var(--warn);font-size:12px}footer{color:var(--muted);font-size:11px;margin:16px 2px}
+@media(max-width:900px){.span-3,.span-4,.span-6,.span-8{grid-column:span 6}}@media(max-width:600px){.wrap{padding:12px}.grid{grid-template-columns:1fr;gap:10px}.span-3,.span-4,.span-6,.span-8,.span-12{grid-column:span 1}h1{font-size:21px}.card{padding:14px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <div><div class="eyebrow">IT MANAGEMENT</div><div class="title">Situation Cockpit</div><div class="sub" id="date">–</div></div>
-    <div class="updated" id="updated">Lade Daten …</div>
-  </header>
+<header><div><h1>IT Management Cockpit</h1><div class="subtitle">Live-Übersicht für IT, Security, Cloud &amp; Technologie</div></div>
+<div class="status"><div id="lastUpdate">Lade Daten …</div><button class="btn" onclick="loadAll()">↻ Aktualisieren</button></div></header>
 
-  <div class="grid">
-    <section class="card">
-      <h2>🌦 Frankfurt</h2>
-      <div class="metric" id="temp">–</div>
-      <div id="weatherText" class="muted">Wetter wird geladen …</div>
-      <div class="row"><span>Heute</span><span id="range">–</span></div>
-      <div class="row"><span>Niederschlag</span><span id="rain">–</span></div>
-      <div class="row"><span>Wind</span><span id="wind">–</span></div>
-    </section>
+<main class="grid">
+<section class="card span-3"><h2>🌤 Frankfurt</h2><div class="value" id="weatherTemp">—</div><div class="muted" id="weatherText">Wetter wird geladen …</div><div class="meta" id="weatherExtra"></div></section>
+<section class="card span-3"><h2>☁️ Cloudflare</h2><div class="value" id="cloudStatus">—</div><div class="muted" id="cloudText">Status wird geladen …</div></section>
+<section class="card span-3"><h2>🐙 GitHub</h2><div class="value" id="githubRepos">—</div><div class="muted">öffentliche Repositories</div><div class="meta">Demo-Abfrage ohne Login</div></section>
+<section class="card span-3"><h2>🛡️ Security</h2><div class="value" id="kevCount">—</div><div class="muted">CISA-KEV-Einträge geladen</div></section>
 
-    <section class="card">
-      <h2>☁️ Cloud / Internet</h2>
-      <div class="row"><span>Cloudflare</span><span id="cfStatus" class="pill">–</span></div>
-      <div id="cfIncident" class="muted" style="margin-top:10px">Status wird geladen …</div>
-    </section>
+<section class="card span-8"><div class="row"><h2>💻 IT &amp; Tech News</h2><span class="pill">Hacker News API</span></div><div id="newsList" class="list"><div class="muted">Lade Nachrichten …</div></div></section>
+<section class="card span-4"><div class="row"><h2>🔐 Security Radar</h2><span class="pill">CISA KEV</span></div><div id="securityList" class="list"><div class="muted">Lade Security-Daten …</div></div></section>
 
-    <section class="card">
-      <h2>🛡 Security</h2>
-      <div class="row"><span>CERT-Bund</span><span class="pill ok">RSS bereit</span></div>
-      <div class="row"><span>CISA KEV</span><span class="pill ok">Feed bereit</span></div>
-      <div class="muted" style="margin-top:10px">RSS-Feeds werden bewusst über den Server eingebunden.</div>
-    </section>
+<section class="card span-6"><h2>🇩🇪 Regulatorik / Behörden</h2><div class="list">
+<div class="item"><a href="https://www.bafin.de/" target="_blank" rel="noopener">BaFin</a><div class="meta">Aufsicht, Rundschreiben, IT-/DORA-Themen</div></div>
+<div class="item"><a href="https://www.bundesbank.de/" target="_blank" rel="noopener">Deutsche Bundesbank</a><div class="meta">Bankenaufsicht und Veröffentlichungen</div></div>
+<div class="item"><a href="https://www.bsi.bund.de/" target="_blank" rel="noopener">BSI</a><div class="meta">Cybersecurity, Lagebilder und Empfehlungen</div></div>
+</div></section>
 
-    <section class="card wide">
-      <h2>📰 IT News</h2>
-      <div class="toolbar"><button class="btn" onclick="loadNews()">↻ Aktualisieren</button><span id="newsState" class="muted"></span></div>
-      <div id="news" class="news"><div class="muted">Für RSS wird ein kleiner Backend-Proxy benötigt.</div></div>
-    </section>
-
-    <section class="card">
-      <h2>🤖 AI Radar</h2>
-      <div class="row"><span>AI</span><span class="muted">Filter im Feed</span></div>
-      <div class="row"><span>Copilot</span><span class="muted">Filter im Feed</span></div>
-      <div class="row"><span>AI Act</span><span class="muted">Filter im Feed</span></div>
-      <div class="row"><span>LLM / Agents</span><span class="muted">Filter im Feed</span></div>
-    </section>
-
-    <section class="card wide">
-      <h2>🏦 Regulatory / Lage</h2>
-      <div id="regulatory" class="news">
-        <a href="https://www.bundesbank.de/de/startseite/rss" target="_blank" rel="noopener">Bundesbank RSS →</a>
-        <a href="https://www.bafin.de/DE/PublikationenDaten/Publikationen/Publikationen_node.html" target="_blank" rel="noopener">BaFin Publikationen →</a>
-        <a href="https://www.bsi.bund.de/" target="_blank" rel="noopener">BSI →</a>
-      </div>
-    </section>
-  </div>
-  <div class="footer">Datenquellen: Open-Meteo, Cloudflare Status sowie nachgelagerte RSS-/Open-Data-Quellen. Externe Daten sind Informationsquellen und keine interne Lagebewertung.</div>
+<section class="card span-6"><h2>📌 Management-Fokus</h2><div class="list">
+<div class="item"><strong>Security</strong><div class="meta">Exploited Vulnerabilities und kritische Abhängigkeiten beobachten.</div></div>
+<div class="item"><strong>Cloud / Availability</strong><div class="meta">Öffentliche Statusinformationen regelmäßig prüfen.</div></div>
+<div class="item"><strong>Regulatorik</strong><div class="meta">DORA, BaFin, BSI und Bundesbank als feste Informationsquellen.</div></div>
+</div></section>
+</main>
+<footer>Öffentliche Datenquellen. Keine internen Bankdaten oder Zugangsdaten in dieser Website speichern.</footer>
 </div>
 
 <script>
-const weatherUrl="https://api.open-meteo.com/v1/forecast?latitude=50.1109&longitude=8.6821&current=temperature_2m,wind_speed_10m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FBerlin";
-const cfUrl="https://www.cloudflarestatus.com/api/v2/summary.json";
-const codes={0:"Klar",1:"Überwiegend klar",2:"Teilweise bewölkt",3:"Bedeckt",45:"Nebel",48:"Reifnebel",51:"Nieselregen",53:"Nieselregen",55:"Nieselregen",61:"Regen",63:"Regen",65:"Starker Regen",71:"Schnee",73:"Schnee",75:"Starker Schnee",80:"Regenschauer",81:"Regenschauer",82:"Starke Regenschauer",95:"Gewitter",96:"Gewitter",99:"Gewitter"};
+const WEATHER="https://api.open-meteo.com/v1/forecast?latitude=50.1109&longitude=8.6821&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Europe%2FBerlin";
+const HN="https://hacker-news.firebaseio.com/v0/topstories.json";
+const KEV="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json";
+const CF="https://www.cloudflarestatus.com/api/v2/status.json";
+const GH="https://api.github.com/search/repositories?q=stars:%3E100000&per_page=1";
 
-function fmtDate(){document.getElementById("date").textContent=new Intl.DateTimeFormat("de-DE",{weekday:"long",day:"2-digit",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date())}
-async function loadWeather(){
- try{
-  const d=await fetch(weatherUrl).then(r=>r.json()), c=d.current, day=d.daily;
-  document.getElementById("temp").textContent=Math.round(c.temperature_2m)+" °C";
-  document.getElementById("weatherText").textContent=(codes[c.weather_code]||"Wetter")+" · Frankfurt am Main";
-  document.getElementById("range").textContent=Math.round(day.temperature_2m_min[0])+"° / "+Math.round(day.temperature_2m_max[0])+"°";
-  document.getElementById("rain").textContent=(day.precipitation_probability_max[0]??0)+" %";
-  document.getElementById("wind").textContent=Math.round(c.wind_speed_10m)+" km/h";
- }catch(e){document.getElementById("weatherText").textContent="Wetter momentan nicht verfügbar";}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function wtext(c){return ({0:"Klar",1:"Überwiegend klar",2:"Teilweise bewölkt",3:"Bedeckt",45:"Nebel",48:"Nebel",51:"Nieselregen",53:"Nieselregen",55:"Starker Nieselregen",61:"Leichter Regen",63:"Regen",65:"Starker Regen",71:"Leichter Schneefall",73:"Schneefall",75:"Starker Schneefall",80:"Regenschauer",81:"Regenschauer",82:"Starke Regenschauer",95:"Gewitter",96:"Gewitter mit Hagel",99:"Gewitter mit Hagel"})[c]||"Wetter"}
+
+async function weather(){
+ try{let r=await fetch(WEATHER,{cache:"no-store"});if(!r.ok)throw 0;let c=(await r.json()).current;
+ document.getElementById("weatherTemp").textContent=Math.round(c.temperature_2m)+" °C";
+ document.getElementById("weatherText").textContent=wtext(c.weather_code);
+ document.getElementById("weatherExtra").textContent=`Feuchte ${c.relative_humidity_2m}% · Wind ${Math.round(c.wind_speed_10m)} km/h`;
+ }catch(e){document.getElementById("weatherText").innerHTML='<span class="error">Wetter nicht abrufbar.</span>'}
 }
-async function loadCloud(){
- try{
-  const d=await fetch(cfUrl).then(r=>r.json());
-  const el=document.getElementById("cfStatus");
-  const good=d.status?.indicator==="none";
-  el.textContent=good?"Operational":(d.status?.description||"Störung");
-  el.className="pill "+(good?"ok":"warn");
-  const active=(d.incidents||[]).filter(x=>x.status!=="resolved");
-  document.getElementById("cfIncident").textContent=active.length?active[0].name:"Keine ungelösten Incidents";
- }catch(e){document.getElementById("cfIncident").textContent="Cloudflare Status momentan nicht verfügbar";}
+async function news(){
+ let box=document.getElementById("newsList");
+ try{let r=await fetch(HN,{cache:"no-store"});if(!r.ok)throw 0;let ids=(await r.json()).slice(0,8);
+ let stories=await Promise.all(ids.map(id=>fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`,{cache:"no-store"}).then(x=>x.json())));
+ box.innerHTML=stories.filter(Boolean).map(s=>{let u=s.url||`https://news.ycombinator.com/item?id=${s.id}`;let d=s.url?new URL(s.url).hostname.replace(/^www\./,""):"Hacker News";
+ return `<div class="item"><a href="${u}" target="_blank" rel="noopener">${esc(s.title||"Ohne Titel")}</a><div class="meta">${esc(d)} · ${s.score||0} Punkte · ${s.descendants||0} Kommentare</div></div>`}).join("");
+ }catch(e){box.innerHTML='<div class="error">IT-News konnten nicht geladen werden.</div>'}
 }
-async function loadNews(){
- document.getElementById("newsState").textContent="RSS wird über Backend erwartet";
+async function security(){
+ let box=document.getElementById("securityList");
+ try{let r=await fetch(KEV,{cache:"no-store"});if(!r.ok)throw 0;let d=await r.json(),v=d.vulnerabilities||[];
+ document.getElementById("kevCount").textContent=v.length.toLocaleString("de-DE");
+ box.innerHTML=v.slice(-6).reverse().map(x=>`<div class="item"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">${esc(x.cveID||"CVE")}</a><div class="meta">${esc(x.vendorProject||"Unbekannt")} · ${esc(x.product||"Produkt")} · ${esc(x.dateAdded||"")}</div></div>`).join("");
+ }catch(e){document.getElementById("kevCount").textContent="—";box.innerHTML='<div class="error">Security-Daten konnten nicht geladen werden.</div>'}
 }
-function init(){fmtDate();loadWeather();loadCloud();document.getElementById("updated").textContent="Zuletzt geladen: "+new Intl.DateTimeFormat("de-DE",{hour:"2-digit",minute:"2-digit"}).format(new Date())}
-init();
-setInterval(()=>{loadWeather();loadCloud();document.getElementById("updated").textContent="Aktualisiert: "+new Intl.DateTimeFormat("de-DE",{hour:"2-digit",minute:"2-digit"}).format(new Date())},5*60*1000);
+async function cloudflare(){
+ try{let r=await fetch(CF,{cache:"no-store"});if(!r.ok)throw 0;let s=(await r.json()).status?.description||"Unbekannt";
+ document.getElementById("cloudStatus").textContent=s;document.getElementById("cloudText").textContent=s.toLowerCase().includes("operational")?"Keine allgemeine Störung gemeldet.":"Statusseite prüfen.";
+ }catch(e){document.getElementById("cloudStatus").textContent="—";document.getElementById("cloudText").textContent="Status nicht abrufbar."}
+}
+async function github(){
+ try{let r=await fetch(GH,{headers:{"Accept":"application/vnd.github+json"},cache:"no-store"});if(!r.ok)throw 0;let d=await r.json();document.getElementById("githubRepos").textContent=(d.total_count||0).toLocaleString("de-DE")}
+ catch(e){document.getElementById("githubRepos").textContent="—"}
+}
+async function loadAll(){
+ document.getElementById("lastUpdate").textContent="Aktualisiere …";
+ await Promise.all([weather(),news(),security(),cloudflare(),github()]);
+ document.getElementById("lastUpdate").textContent="Stand: "+new Date().toLocaleString("de-DE",{dateStyle:"short",timeStyle:"short"});
+}
+loadAll();setInterval(loadAll,300000);
 </script>
 </body>
 </html>

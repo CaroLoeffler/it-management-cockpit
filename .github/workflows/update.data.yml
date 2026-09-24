@@ -2,7 +2,7 @@ name: Daten aktualisieren
 
 on:
   schedule:
-    - cron: "*/30 * * * *"   # alle 30 Minuten
+    - cron: "*17/47 * * * *"   # alle 30 Minuten
   workflow_dispatch:          # zusätzlich manuell startbar
 
 permissions:
